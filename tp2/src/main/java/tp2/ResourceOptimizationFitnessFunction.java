@@ -6,6 +6,13 @@ import org.jgap.FitnessFunction;
 import org.jgap.Gene;
 import org.jgap.IChromosome;
 
+/**
+ * Funcion de amplitud que representa el nivel de optimizacion de los recursos
+ * asignados.
+ * 
+ * @author msegade
+ *
+ */
 public class ResourceOptimizationFitnessFunction extends FitnessFunction {
 
 	/**

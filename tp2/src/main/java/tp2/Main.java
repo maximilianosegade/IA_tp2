@@ -20,17 +20,26 @@ public class Main {
 	    
 	    doEvolution(population);
 	    
-	    showResult(population);
+	    logFinalResult(population);
 	}
 
-	private static void showResult(Genotype population) {
+	/**
+	 * Logging de resultados finales de la ejecucion.
+	 * 
+	 * @author msegade
+	 */
+	private static void logFinalResult(Genotype population) {
 		IChromosome bestSolutionSoFar = population.getFittestChromosome();
-	    double v1 = bestSolutionSoFar.getFitnessValue();
 	    System.out.println("The best solution has a fitness value of " +
 	                       bestSolutionSoFar.getFitnessValue());
 	    bestSolutionSoFar.setFitnessValueDirectly(-1);
 	}
 
+	/**
+	 * Evolucion del genotipo hasta alcanzar el objetivo de fin.
+	 * 
+	 * @author msegade
+	 */
 	private static void doEvolution(Genotype population) {
 		long startTime = System.currentTimeMillis();
 	    for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
@@ -41,6 +50,11 @@ public class Main {
 	                       + " ms");
 	}
 
+	/**
+	 * Seteo de parametros de configuracion y creacion del genotipo inicial.
+	 * 
+	 * @author msegade
+	 */
 	private static Genotype initGenotype(){
 		try {
 			Configuration conf = new DefaultConfiguration();
@@ -64,6 +78,8 @@ public class Main {
 	 * Procesadores 	(gen auxiliar)		{ 1,2,3,4,5,6,7,8 }
 	 * Memoria RAM (GB) (gen auxiliar)		{ 2,4,8,16,32,64,128 }
 	 * Disco (GB) 		(gen auxiliar)		{ 512, 1024, 2048, 4096, 8192 }
+	 * 
+	 * @author msegade
 	 */
 	private static void setSampleChromosome(Configuration conf) {
 		try {
@@ -78,6 +94,11 @@ public class Main {
 		}
 	}
 
+	/**
+	 * Creacion de la estructura de un gen primario.
+	 * 
+	 * @author msegade
+	 */
 	private static Gene createPrimaryGene(Configuration conf) throws InvalidConfigurationException {
 		CompositeGene primaryGene = new CompositeGene(conf);
 		
