@@ -9,11 +9,10 @@ import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.CompositeGene;
 import org.jgap.impl.DefaultConfiguration;
 import org.jgap.impl.IntegerGene;
-import org.jgap.impl.MapGene;
 
 public class Main {
 	
-	private static final int MAX_ALLOWED_EVOLUTIONS = 100;
+	private static final int MAX_ALLOWED_EVOLUTIONS = 20;
 
 	public static void main(String[] args) {
 		Genotype population = initGenotype();
@@ -43,6 +42,7 @@ public class Main {
 	private static void doEvolution(Genotype population) {
 		long startTime = System.currentTimeMillis();
 	    for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
+	    	System.out.println(population.getFittestChromosome());
 	        population.evolve();
 	    }
 	    long endTime = System.currentTimeMillis();
@@ -102,28 +102,14 @@ public class Main {
 	private static Gene createPrimaryGene(Configuration conf) throws InvalidConfigurationException {
 		CompositeGene primaryGene = new CompositeGene(conf);
 		
-		// Procesadores
+		// Procesadores: 1 a 8
 		primaryGene.addGene(new IntegerGene(conf, 1, 8));
 		
-		// RAM
-		MapGene ramGene = new MapGene(conf);
-		ramGene.addAllele("2", 2);
-		ramGene.addAllele("4", 4);
-		ramGene.addAllele("8", 8);
-		ramGene.addAllele("16", 16);
-		ramGene.addAllele("32", 32);
-		ramGene.addAllele("64", 64);
-		ramGene.addAllele("128", 128);
-		primaryGene.addGene(ramGene);
+		// RAM: 2^N con N {1,7} - 2GB a 128GB
+		primaryGene.addGene(new IntegerGene(conf, 1, 7));
 		
-		// Espacio en disco
-		MapGene diskSpaceGene = new MapGene(conf);
-		diskSpaceGene.addAllele("512", 512);
-		diskSpaceGene.addAllele("1024", 1024);
-		diskSpaceGene.addAllele("2048", 2048);
-		diskSpaceGene.addAllele("4096", 4096);
-		diskSpaceGene.addAllele("8192", 8192);
-		primaryGene.addGene(diskSpaceGene);
+		// Espacio en disco: 2^N con N {9,13} - 512GB a 8TB
+		primaryGene.addGene(new IntegerGene(conf, 9, 13));
 		
 		return primaryGene;
 	}
