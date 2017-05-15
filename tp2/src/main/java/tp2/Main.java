@@ -5,8 +5,12 @@ import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.DefaultConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
+	
+	private static final Logger logger = LoggerFactory.getLogger(Main.class);
 	
 	private static final int MAX_ALLOWED_EVOLUTIONS = 20;
 
@@ -36,12 +40,23 @@ public class Main {
 	 */
 	private static void doEvolution(Genotype population) {
 		long startTime = System.currentTimeMillis();
-	    for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
+
+		for (int i = 0; i < MAX_ALLOWED_EVOLUTIONS; i++) {
+	    	logPopulationSnapshot(population, i);
 	        population.evolve();
 	    }
+		
 	    long endTime = System.currentTimeMillis();
-	    System.out.println("Total evolution time: " + ( endTime - startTime)
-	                       + " ms");
+	    logger.debug("Total evolution time: " + ( endTime - startTime) + " ms");
+	}
+
+	/**
+	 * Log de caracteristicas principales de la poblacion actual.
+	 * @param i 
+	 */
+	private static void logPopulationSnapshot(Genotype population, int i) {
+		logger.debug("Corrida[" + i + "]: "
+				+ "Mejor cromosoma[" + population.getFittestChromosome().getFitnessValue() + "].");
 	}
 
 	/**

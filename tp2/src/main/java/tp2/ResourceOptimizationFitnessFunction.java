@@ -4,6 +4,8 @@ import org.jgap.FitnessFunction;
 import org.jgap.Gene;
 import org.jgap.IChromosome;
 import org.jgap.impl.CompositeGene;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Funcion de amplitud que representa el nivel de optimizacion de los recursos
@@ -14,6 +16,8 @@ import org.jgap.impl.CompositeGene;
  */
 public class ResourceOptimizationFitnessFunction extends FitnessFunction {
 
+	static final Logger logger = LoggerFactory.getLogger(ResourceOptimizationFitnessFunction.class);
+	
 	/**
 	 * 
 	 */

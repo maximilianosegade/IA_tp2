@@ -7,8 +7,12 @@ import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
 import org.jgap.impl.CompositeGene;
 import org.jgap.impl.IntegerGene;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ChromosomeUtils {
+	
+	private static final Logger logger = LoggerFactory.getLogger(ChromosomeUtils.class);
 
 	public static final String[] VM_IDS = { "Titan", "Dione", "Rhea", "Tethys", "Pandora" };
 	
@@ -70,8 +74,7 @@ public class ChromosomeUtils {
 	}
 
 	public static void logChromosome(IChromosome chromosome) {
-		System.out.println("Fitness value: [" +
-                chromosome.getFitnessValue() + "].");
+		logger.debug("Fitness value: [" + chromosome.getFitnessValue() + "].");
 		
 		Integer totalProcessors = 0;
 		Integer totalRam = 0;
@@ -83,13 +86,13 @@ public class ChromosomeUtils {
 			totalDisk += getDisk(subgene);
 			totalRam += getRam(subgene);
 			
-			System.out.println("VM[" + VM_IDS[i] + "]: [" + getProcessors(subgene) + " - " + 
+			logger.debug("VM[" + VM_IDS[i] + "]: [" + getProcessors(subgene) + " - " + 
 									getRam(subgene) + " - " + 
 									getDisk(subgene) + "].");
 			
 		}
 		
-		System.out.println("Total: [" + totalProcessors + " - " + totalRam + " GB - " + totalDisk + " GB].");
+		logger.debug("Total: [" + totalProcessors + " - " + totalRam + " GB - " + totalDisk + " GB].");
 	}
 
 }
