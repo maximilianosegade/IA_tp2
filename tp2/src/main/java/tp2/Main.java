@@ -4,15 +4,17 @@ import org.jgap.Configuration;
 import org.jgap.Genotype;
 import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
-import org.jgap.impl.DefaultConfiguration;
+import org.jgap.impl.WeightedRouletteSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Main {
 	
+
 	private static final Logger logger = LoggerFactory.getLogger(Main.class);
 	
-	private static final int MAX_ALLOWED_EVOLUTIONS = 20;
+	private static final int POPULATION_SIZE = 50;
+	private static final int MAX_ALLOWED_EVOLUTIONS = 200;
 
 	public static void main(String[] args) {
 		Genotype population = initGenotype();
@@ -29,7 +31,7 @@ public class Main {
 	 */
 	private static void logFinalResult(Genotype population) {
 		IChromosome bestSolutionSoFar = population.getFittestChromosome();
-	    ChromosomeUtils.logChromosome(bestSolutionSoFar);
+	    ChromosomeUtils.logChromosomeFinal(bestSolutionSoFar);
 	    bestSolutionSoFar.setFitnessValueDirectly(-1);	    
 	}
 
@@ -55,8 +57,7 @@ public class Main {
 	 * @param i 
 	 */
 	private static void logPopulationSnapshot(Genotype population, int i) {
-		logger.debug("Corrida[" + i + "]: "
-				+ "Mejor cromosoma[" + population.getFittestChromosome().getFitnessValue() + "].");
+		ChromosomeUtils.logChromosomeSnapshot(population.getFittestChromosome(), i);
 	}
 
 	/**
@@ -66,12 +67,12 @@ public class Main {
 	 */
 	private static Genotype initGenotype(){
 		try {
-			Configuration conf = new DefaultConfiguration();
-		    //conf.setPreservFittestIndividual(true);
+			Configuration conf = new CustomConfiguration(0.35D, 5);
+			conf.addNaturalSelector(new WeightedRouletteSelector(conf), false);
 		    conf.setKeepPopulationSizeConstant(false);
 			conf.setFitnessFunction(new ResourceOptimizationFitnessFunction());
 		    ChromosomeUtils.setSampleChromosome(conf);
-		    conf.setPopulationSize(100);
+		    conf.setPopulationSize(POPULATION_SIZE);
 		    Genotype population = Genotype.randomInitialGenotype(conf);
 		    population = Genotype.randomInitialGenotype(conf);
 			return population;

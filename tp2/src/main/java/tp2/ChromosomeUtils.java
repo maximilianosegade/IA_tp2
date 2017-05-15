@@ -72,8 +72,25 @@ public class ChromosomeUtils {
 		double doubleValue = Double.valueOf(String.valueOf((Integer) subgene.geneAt(2).getAllele()));
 		return (int) Math.pow(2.0, doubleValue );
 	}
-
-	public static void logChromosome(IChromosome chromosome) {
+	
+	public static void logChromosomeSnapshot(IChromosome chromosome, Integer corrida) {
+		String chromosomeStructure = "";
+		
+		for (int i=0; i< chromosome.size(); i++){
+			CompositeGene subgene = (CompositeGene) chromosome.getGenes()[i];
+			int totalProcessors = getProcessors(subgene);
+			int totalDisk = getDisk(subgene);
+			int totalRam = getRam(subgene);
+			
+			chromosomeStructure += "(" + totalProcessors + ";" + totalRam + ";" + totalDisk + ")";
+		}
+		
+		logger.debug("Corrida: [" + corrida + "] - " +
+				"Fitness value: [" + chromosome.getFitnessValue() + "] - " +
+				"Structure: [" + chromosomeStructure + "].");
+	}
+	
+	public static void logChromosomeFinal(IChromosome chromosome) {
 		logger.debug("Fitness value: [" + chromosome.getFitnessValue() + "].");
 		
 		Integer totalProcessors = 0;
