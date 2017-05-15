@@ -10,6 +10,8 @@ import org.jgap.impl.IntegerGene;
 
 public class ChromosomeUtils {
 
+	public static final String[] VM_IDS = { "Titan", "Dione", "Rhea", "Tethys", "Pandora" };
+	
 	/**
 	 * Estructura del cromosoma:
 	 * 
@@ -81,13 +83,13 @@ public class ChromosomeUtils {
 			totalDisk += getDisk(subgene);
 			totalRam += getRam(subgene);
 			
-			System.out.println("VM[" + (i+1) + "]: [" + getProcessors(subgene) + " - " + 
+			System.out.println("VM[" + VM_IDS[i] + "]: [" + getProcessors(subgene) + " - " + 
 									getRam(subgene) + " - " + 
 									getDisk(subgene) + "].");
 			
 		}
 		
-		System.out.println("Total: [" + totalProcessors + " - " + totalRam + "GB - " + totalDisk + "GB].");
+		System.out.println("Total: [" + totalProcessors + " - " + totalRam + " GB - " + totalDisk + " GB].");
 	}
 
 }

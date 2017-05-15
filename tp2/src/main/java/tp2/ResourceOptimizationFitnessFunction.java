@@ -21,7 +21,7 @@ public class ResourceOptimizationFitnessFunction extends FitnessFunction {
 	// Cantidad maxima de cores.
 	public static final int MAX_PROCESSORS = 16;
 	// Cantidad maxima de RAM en GB.
-	public static final int MAX_RAM = 128;
+	public static final int MAX_RAM = 256;
 	// Cantidad maxima de espacion en disco en GB.
 	public static final int MAX_DISK = 12288;
 
@@ -35,9 +35,14 @@ public class ResourceOptimizationFitnessFunction extends FitnessFunction {
 
 		// Aplicar todas las constraints del dominio
 		total += availableResourcesCheck(genes);
+		total += minimunRequiredResources(genes);
 		
 		return total;
 		
+	}
+	
+	private int minimunRequiredResources(Gene[] genes) {
+		return 0;
 	}
 
 	private Integer availableResourcesCheck(Gene[] genes) {
