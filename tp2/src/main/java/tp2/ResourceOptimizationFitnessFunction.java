@@ -48,11 +48,11 @@ public class ResourceOptimizationFitnessFunction extends FitnessFunction {
 	private static final Integer RHEA_REQUIRED_VALUE = 60;
 	private static final Integer TETHYS_REQUIRED_VALUE = 25;
 	private static final Integer PANDORA_REQUIRED_VALUE = 25;
-	private static final Integer TITAN_TETHYS_EQUAL_VALUE = 20;
+	private static final Integer DIONE_TETHYS_EQUAL_RAM_VALUE = 20;
 	// Parametrizacion de penalidades.
 	private static final Integer RESOURCE_LIMIT_UNSATISFIED_VALUE = -70;
 	private static final Integer REQUIRED_UNSATISFIED_VALUE = -50;
-	private static final Integer TITAN_TETHYS_EQUAL_UNSATISFIED_VALUE = -20;
+	private static final Integer DIONE_TETHYS_EQUAL_RAM_UNSATISFIED_VALUE = -20;
 
 	@Override
 	protected double evaluate(IChromosome aChromosome) {
@@ -67,23 +67,20 @@ public class ResourceOptimizationFitnessFunction extends FitnessFunction {
 		total += requiredRhea(genes);
 		total += requiredTethys(genes);
 		total += requiredPandora(genes);
-		//total += tethysAndTitanAreEquals(genes);
+		total += tethysAndDioneSameMemory(genes);
 		
 		return total < 0 ? 0 : total;
 		
 	}
 	
-	private int tethysAndTitanAreEquals(Gene[] genes) {
-		CompositeGene titanGene = (CompositeGene) genes[0];
+	private int tethysAndDioneSameMemory(Gene[] genes) {
+		CompositeGene dioneGene = (CompositeGene) genes[1];
 		CompositeGene tethysGene = (CompositeGene) genes[3];
 		
-		if ( ChromosomeUtils.getProcessors(titanGene).equals(ChromosomeUtils.getProcessors(tethysGene)) &&
-				ChromosomeUtils.getRam(titanGene).equals(ChromosomeUtils.getRam(tethysGene)) &&
-				ChromosomeUtils.getDisk(titanGene).equals(ChromosomeUtils.getDisk(tethysGene))
-				){
-			return TITAN_TETHYS_EQUAL_VALUE;
+		if (ChromosomeUtils.getRam(dioneGene).equals(ChromosomeUtils.getRam(tethysGene))){
+			return DIONE_TETHYS_EQUAL_RAM_VALUE;
 		}else{
-			return TITAN_TETHYS_EQUAL_UNSATISFIED_VALUE;
+			return DIONE_TETHYS_EQUAL_RAM_UNSATISFIED_VALUE;
 		}
 	}
 

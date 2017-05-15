@@ -21,7 +21,6 @@ public class CustomConfiguration extends Configuration {
 	public CustomConfiguration(double crossoverRate, int mutationRate) {
 		this();
 		try {
-			
 			addGeneticOperator(new CrossoverOperator(this, crossoverRate));
 			addGeneticOperator(new MutationOperator(this, mutationRate));
 		} catch (InvalidConfigurationException e) {
