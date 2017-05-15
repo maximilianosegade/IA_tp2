@@ -1,5 +1,7 @@
 package tp2;
 
+import java.util.Arrays;
+
 import org.jgap.Configuration;
 import org.jgap.Genotype;
 import org.jgap.IChromosome;
@@ -24,7 +26,7 @@ public class Main {
 	private static int MAX_ALLOWED_EVOLUTIONS = 400;
 	private static int MUTATION_RATE = 1;
 	private static double CROSSOVER_RATE = 0.40D;
-	private static final SELECTOR SELECTOR_TYPE = SELECTOR.TOURNAMENT;
+	private static SELECTOR SELECTOR_TYPE = SELECTOR.TOURNAMENT;
 
 	public static void main(String[] args) {
 		externalConfiguration(args);
@@ -42,15 +44,23 @@ public class Main {
 	 * @author msegade
 	 */
 	private static void externalConfiguration(String[] args) {
+		if (args.length != 5 || !Arrays.asList(SELECTOR.values()).contains(SELECTOR.valueOf(args[4])) ){
+			System.out.println("Uso: run.bat <poblacion> <vueltas> <tasa_mutacion> <tasa_cruza> <RANKING|ROULETTE|TOURNAMENT>");
+			System.exit(1);
+		}
+
 		POPULATION_SIZE = Integer.parseInt(args[0]);
 		MAX_ALLOWED_EVOLUTIONS = Integer.parseInt(args[1]);
 		MUTATION_RATE = Integer.parseInt(args[2]);
 		CROSSOVER_RATE = Double.parseDouble(args[3]);
+		SELECTOR_TYPE = SELECTOR.valueOf(args[4]);
+		
 		logger.debug("Parametrizacion:");
 		logger.debug("Poblacion: " + POPULATION_SIZE);
 		logger.debug("Vueltas: " + MAX_ALLOWED_EVOLUTIONS);
 		logger.debug("Tasa de mutacion: " + MUTATION_RATE);
 		logger.debug("Tasa de cruza: " + CROSSOVER_RATE);
+		logger.debug("Selector: " + SELECTOR_TYPE);
 	}
 
 	/**
