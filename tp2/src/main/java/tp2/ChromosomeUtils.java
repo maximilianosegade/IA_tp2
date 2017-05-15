@@ -1,5 +1,7 @@
 package tp2;
 
+import java.util.List;
+
 import org.jgap.Chromosome;
 import org.jgap.Configuration;
 import org.jgap.Gene;
@@ -90,26 +92,29 @@ public class ChromosomeUtils {
 				"Structure: [" + chromosomeStructure + "].");
 	}
 	
-	public static void logChromosomeFinal(IChromosome chromosome) {
-		logger.debug("Fitness value: [" + chromosome.getFitnessValue() + "].");
-		
-		Integer totalProcessors = 0;
-		Integer totalRam = 0;
-		Integer totalDisk = 0;
-		
-		for (int i=0; i< chromosome.size(); i++){
-			CompositeGene subgene = (CompositeGene) chromosome.getGenes()[i];
-			totalProcessors += getProcessors(subgene);
-			totalDisk += getDisk(subgene);
-			totalRam += getRam(subgene);
+	public static void logChromosomeFinal(List<IChromosome> chromosomes) {
+		for (IChromosome chromosome: chromosomes){
+			logger.debug("======================================================");
+			logger.debug("Fitness value: [" + chromosome.getFitnessValue() + "].");
 			
-			logger.debug("VM[" + VM_IDS[i] + "]: [" + getProcessors(subgene) + " - " + 
-									getRam(subgene) + " - " + 
-									getDisk(subgene) + "].");
+			Integer totalProcessors = 0;
+			Integer totalRam = 0;
+			Integer totalDisk = 0;
 			
+			for (int i=0; i< chromosome.size(); i++){
+				CompositeGene subgene = (CompositeGene) chromosome.getGenes()[i];
+				totalProcessors += getProcessors(subgene);
+				totalDisk += getDisk(subgene);
+				totalRam += getRam(subgene);
+				
+				logger.debug("VM[" + VM_IDS[i] + "]: [" + getProcessors(subgene) + " - " + 
+										getRam(subgene) + " - " + 
+										getDisk(subgene) + "].");
+				
+			}
+			
+			logger.debug("Total: [" + totalProcessors + " - " + totalRam + " GB - " + totalDisk + " GB].");
 		}
-		
-		logger.debug("Total: [" + totalProcessors + " - " + totalRam + " GB - " + totalDisk + " GB].");
 	}
 
 }

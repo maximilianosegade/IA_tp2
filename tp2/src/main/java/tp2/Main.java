@@ -1,6 +1,7 @@
 package tp2;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.jgap.Configuration;
 import org.jgap.Genotype;
@@ -69,9 +70,8 @@ public class Main {
 	 * @author msegade
 	 */
 	private static void logFinalResult(Genotype population) {
-		IChromosome bestSolutionSoFar = population.getFittestChromosome();
-	    ChromosomeUtils.logChromosomeFinal(bestSolutionSoFar);
-	    bestSolutionSoFar.setFitnessValueDirectly(-1);	    
+		List<IChromosome> bestSolution = population.getFittestChromosomes(1);
+	    ChromosomeUtils.logChromosomeFinal(bestSolution);
 	}
 
 	/**
